@@ -11,11 +11,4 @@ public class DebitCard {
     public double getBalance() {
         return balance;
     }
-
-    @Override
-    public String toString() {
-        return "DebitCard{" +
-                "balance=" + balance +
-                '}';
-    }
 }

@@ -37,12 +37,4 @@ public class DiscountCard {
             return new DiscountCard(this);
         }
     }
-
-    @Override
-    public String toString() {
-        return "DiscountCard{" +
-                "number=" + number +
-                ", discountPercentage=" + discountPercentage +
-                '}';
-    }
 }

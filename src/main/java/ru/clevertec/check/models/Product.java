@@ -36,18 +36,6 @@ public class Product {
         return isWholesale;
     }
 
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", quantityInStock=" + quantityInStock +
-                ", isWholesale=" + isWholesale +
-                '}';
-    }
-
     public static class Builder {
         private int id;
         private String name;

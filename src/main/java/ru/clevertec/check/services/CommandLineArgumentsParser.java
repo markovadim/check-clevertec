@@ -1,5 +1,7 @@
 package main.java.ru.clevertec.check.services;
 
+import main.java.ru.clevertec.check.exceptions.BadRequestException;
+import main.java.ru.clevertec.check.exceptions.ProductNotFoundException;
 import main.java.ru.clevertec.check.repositories.DiscountCardRepository;
 import main.java.ru.clevertec.check.repositories.ProductRepository;
 import main.java.ru.clevertec.check.models.DebitCard;
@@ -7,13 +9,14 @@ import main.java.ru.clevertec.check.models.DiscountCard;
 import main.java.ru.clevertec.check.models.Product;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
+import java.awt.color.ProfileDataException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CommandLineArgumentsParser implements Parser {
 
-    private Map<Product, Integer> bucket = new HashMap<>();
+    private Map<Product, Integer> basket = new HashMap<>();
     private DiscountCard discountCard;
     private DebitCard debitCard;
 
@@ -26,14 +29,12 @@ public class CommandLineArgumentsParser implements Parser {
     }
 
     public boolean checkInputFormat(String[] args) {
-        if (args.length < 3) {
-            System.out.println("Недостаточно Вводимых аргументов.");
-            return false;
+        if (args.length < 2) {
+            throw new BadRequestException(StringStorage.BAD_REQUEST_INPUT_ARGS);
         }
         Pattern lineArgsPattern = Pattern.compile(StringStorage.PATTERN_LINE_ARGS);
         if (!lineArgsPattern.matcher(String.join(" ", args)).matches()) {
-            System.out.println("Не Соответствует шаблону!");
-            return false;
+            throw new BadRequestException(StringStorage.BAD_REQUEST_INPUT_PATTERN);
         }
         return true;
     }
@@ -44,9 +45,12 @@ public class CommandLineArgumentsParser implements Parser {
         Pattern pattern3 = Pattern.compile(StringStorage.PATTERN_LINE_ARGS_BALANCE);
 
         for (String str : args) {
-            System.out.println(str);
             if (pattern1.matcher(str).matches()) {
-                fillingBucket(str);
+                try {
+                    fillingBucket(str);
+                } catch (ProductNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             if (pattern2.matcher(str).matches()) {
                 findDiscountCard(str);
@@ -59,18 +63,23 @@ public class CommandLineArgumentsParser implements Parser {
 
     private void fillingBucket(String str) {
         String[] productPart = str.split("-");
-        Product currentProduct = ProductRepository.getById(Integer.parseInt(productPart[0])).orElseThrow();
-        if (bucket.get(currentProduct) == null) {
-            bucket.put(
-                    currentProduct,
-                    Integer.parseInt(productPart[1])
-            );
+        Product currentProduct = ProductRepository.getById(Integer.parseInt(productPart[0]))
+                .orElseThrow(() -> new ProductNotFoundException(String.format(StringStorage.BAD_REQUEST_INPUT_ID, productPart[0])));
+        if (currentProduct.getQuantityInStock() >= Integer.parseInt(productPart[1])) {
+            if (basket.get(currentProduct) == null) {
+                basket.put(
+                        currentProduct,
+                        Integer.parseInt(productPart[1])
+                );
+            } else {
+                int currentAmount = basket.get(currentProduct);
+                basket.replace(
+                        currentProduct,
+                        currentAmount + Integer.parseInt(productPart[1])
+                );
+            }
         } else {
-            int currentAmount = bucket.get(currentProduct);
-            bucket.replace(
-                    currentProduct,
-                    currentAmount + Integer.parseInt(productPart[1])
-            );
+            throw new BadRequestException(StringStorage.BAD_REQUEST_INPUT_AMOUNT);
         }
     }
 
@@ -89,8 +98,8 @@ public class CommandLineArgumentsParser implements Parser {
         debitCard = new DebitCard(Double.parseDouble(debitCardPart[1]));
     }
 
-    public Map<Product, Integer> getBucket() {
-        return bucket;
+    public Map<Product, Integer> getBasket() {
+        return basket;
     }
 
     public DiscountCard getDiscountCard() {
@@ -99,15 +108,5 @@ public class CommandLineArgumentsParser implements Parser {
 
     public DebitCard getDebitCard() {
         return debitCard;
-    }
-
-
-    @Override
-    public String toString() {
-        return "CommandLineArgumentsParser{" +
-                "bucket=" + bucket +
-                ", discountCard=" + discountCard +
-                ", debitCard=" + debitCard +
-                '}';
     }
 }

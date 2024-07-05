@@ -7,9 +7,15 @@ public class Check {
     private Order order;
     private LocalDateTime localDateTime;
 
+    private String exceptionMessage;
+
     public Check(Builder builder) {
         this.order = builder.order;
         this.localDateTime = builder.localDateTime;
+    }
+
+    public Check(String exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 
     public Order getOrder() {
@@ -18,6 +24,10 @@ public class Check {
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
     public static class Builder {

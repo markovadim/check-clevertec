@@ -33,22 +33,31 @@ public class OrderHandler {
     }
 
     public double getTotalDiscount(Map<Product, Integer> basket, DiscountCard discountCard) {
-
-        // сумма скидки оптовых товаров
         double totalWholesaleProductsDiscount = basket.entrySet()
                 .stream()
                 .filter(entry -> (entry.getKey().isWholesale() && entry.getValue() >= 5))
                 .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue() * 0.1)
                 .sum();
 
-        double totalDiscountByCard = basket.entrySet()
-                .stream()
-                .filter(entry -> !(entry.getKey().isWholesale() && entry.getValue() >= 5))
-                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue() * discountCard.getDiscountPercentage() / 100.0)
-                .sum();
+        double totalDiscountByCard = 0.0;
+        if (discountCard != null) {
+            totalDiscountByCard = basket.entrySet()
+                    .stream()
+                    .filter(entry -> !(entry.getKey().isWholesale() && entry.getValue() >= 5))
+                    .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue() * discountCard.getDiscountPercentage() / 100.0)
+                    .sum();
+        }
 
         BigDecimal bd = new BigDecimal(totalWholesaleProductsDiscount + totalDiscountByCard);
         bd = bd.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return bd.doubleValue();
+    }
+
+    public static double getDiscountByItem(Product product, int amount, DiscountCard card) {
+        if ((amount >= 5) && (product.isWholesale())) {
+            return product.getPrice() * amount * 0.1;
+        } else {
+            return card == null ? product.getPrice() * amount * 0 / 100.0 : product.getPrice() * amount * card.getDiscountPercentage() / 100.0;
+        }
     }
 }
