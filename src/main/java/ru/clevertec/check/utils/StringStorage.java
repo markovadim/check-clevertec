@@ -2,8 +2,8 @@ package main.java.ru.clevertec.check.utils;
 
 public class StringStorage {
 
-    public static final String PRODUCTS_PATH = "src\\main\\resources\\products.csv";
-    public static final String CARDS_PATH = "src\\main\\resources\\discountCards.csv";
+    public static final String PRODUCTS_PATH = "./src/main/resources/products.csv";
+    public static final String CARDS_PATH = "./src/main/resources/discountCards.csv";
 
     public static final String PATTERN_FILE_ITEMS = "\\d{1,2};.*;(true|false)$";
     public static final String PATTERN_FILE_CARDS = "\\d{4};\\d{1,2}";
