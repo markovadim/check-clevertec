@@ -3,9 +3,9 @@ package main.java.ru.clevertec.check.services.implementations;
 import main.java.ru.clevertec.check.models.Check;
 import main.java.ru.clevertec.check.services.OrderHandler;
 import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
+import main.java.ru.clevertec.check.utils.FilesUtil;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +14,8 @@ public class FileCheckPrinter implements CheckPrinter {
 
     @Override
     public void print(Check check) {
-        File file = new File(StringStorage.RESULT_FILE_NAME);
 
-        try (FileWriter writer = new FileWriter(file)) {
+        try (FileWriter writer = new FileWriter(FilesUtil.getResultFile())) {
             writer.append(check.getExceptionMessage() == null ? stringBuilderFormation(check) : String.format("%s\n%s", StringStorage.ERROR, check.getExceptionMessage()));
         } catch (IOException e) {
             e.printStackTrace();

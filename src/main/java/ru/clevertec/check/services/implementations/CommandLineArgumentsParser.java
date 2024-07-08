@@ -8,6 +8,7 @@ import main.java.ru.clevertec.check.models.DebitCard;
 import main.java.ru.clevertec.check.models.DiscountCard;
 import main.java.ru.clevertec.check.models.Product;
 import main.java.ru.clevertec.check.services.interfaces.Parser;
+import main.java.ru.clevertec.check.utils.FilesUtil;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class CommandLineArgumentsParser implements Parser {
 
-    private Map<Product, Integer> basket = new HashMap<>();
+    private Map<Product, Integer> bucket = new HashMap<>();
     private DiscountCard discountCard;
     private DebitCard debitCard;
 
@@ -24,6 +25,7 @@ public class CommandLineArgumentsParser implements Parser {
     public void parse(Object... objects) {
         String[] args = (String[]) objects;
         if (checkInputFormat(args)) {
+            parseInnerFiles(args);
             parseArgs(args);
         }
     }
@@ -32,11 +34,30 @@ public class CommandLineArgumentsParser implements Parser {
         if (args.length < 2) {
             throw new BadRequestException(StringStorage.BAD_REQUEST_INPUT_ARGS);
         }
-        Pattern lineArgsPattern = Pattern.compile(StringStorage.PATTERN_LINE_ARGS);
-        if (!lineArgsPattern.matcher(String.join(" ", args)).matches()) {
+        Pattern lineArgsWithFilesPattern = Pattern.compile(StringStorage.PATTERN_LINE_ARGS_WITH_INNER_FILES);
+        if (!lineArgsWithFilesPattern.matcher(String.join(" ", args)).matches()) {
             throw new BadRequestException(StringStorage.BAD_REQUEST_INPUT_PATTERN);
         }
         return true;
+    }
+
+    public void parseInnerFiles(String[] args) {
+        String s = String.join(" ", args);
+        if (s.contains("pathToFile=")) {
+            for (String ss : s.split(" ")) {
+                if (ss.startsWith("pathToFile=")) {
+                    FilesUtil.parseProductsAndCardsFiles(ss.split("=")[1]);
+                }
+                if (ss.startsWith("saveToFile=")) {
+                    FilesUtil.createResultFile(ss.split("=")[1]);
+                } else {
+                    FilesUtil.createResultFile(StringStorage.RESULT_FILE_NAME);
+                }
+            }
+        } else {
+            FilesUtil.createResultFile(StringStorage.RESULT_FILE_BAD_REQUEST);
+            throw new BadRequestException("Not found input argument 'pathToFile'");
+        }
     }
 
     private void parseArgs(String[] args) {
@@ -66,14 +87,14 @@ public class CommandLineArgumentsParser implements Parser {
         Product currentProduct = ProductRepository.getById(Integer.parseInt(productPart[0]))
                 .orElseThrow(() -> new ProductNotFoundException(String.format(StringStorage.BAD_REQUEST_INPUT_ID, productPart[0])));
         if (currentProduct.getQuantityInStock() >= Integer.parseInt(productPart[1])) {
-            if (basket.get(currentProduct) == null) {
-                basket.put(
+            if (bucket.get(currentProduct) == null) {
+                bucket.put(
                         currentProduct,
                         Integer.parseInt(productPart[1])
                 );
             } else {
-                int currentAmount = basket.get(currentProduct);
-                basket.replace(
+                int currentAmount = bucket.get(currentProduct);
+                bucket.replace(
                         currentProduct,
                         currentAmount + Integer.parseInt(productPart[1])
                 );
@@ -98,8 +119,8 @@ public class CommandLineArgumentsParser implements Parser {
         debitCard = new DebitCard(Double.parseDouble(debitCardPart[1]));
     }
 
-    public Map<Product, Integer> getBasket() {
-        return basket;
+    public Map<Product, Integer> getBucket() {
+        return bucket;
     }
 
     public DiscountCard getDiscountCard() {

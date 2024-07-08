@@ -1,0 +1,11 @@
+id;description;price;quantityInStock;isWholesale
+1;Packed tomatoes 350g;10,60;50;false
+2;Packed apples 1kg;20,78;18;false
+3;Packed oranges 1kg;30,20;12;false
+4;Packed bananas 1kg;10,10;25;true
+5;Packed beef fillet 1kg;120,8;7;false
+6;Milk;10,07;10;true
+7;Cream 400g;20,71;20;true
+8;Yogurt 400g;20,10;7;true
+9;Packed potatoes 1kg;10,47;30;false
+10;Packed cabbage 1kg;10,19;15;false
