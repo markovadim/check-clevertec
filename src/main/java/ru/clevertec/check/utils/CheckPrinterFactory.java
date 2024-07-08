@@ -1,6 +1,8 @@
-package main.java.ru.clevertec.check;
+package main.java.ru.clevertec.check.utils;
 
-import main.java.ru.clevertec.check.services.CheckPrinter;
+import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
+import main.java.ru.clevertec.check.services.implementations.ConsoleCheckPrinter;
+import main.java.ru.clevertec.check.services.implementations.FileCheckPrinter;
 
 public class CheckPrinterFactory {
 

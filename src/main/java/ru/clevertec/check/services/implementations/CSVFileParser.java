@@ -1,9 +1,10 @@
-package main.java.ru.clevertec.check.services;
+package main.java.ru.clevertec.check.services.implementations;
 
 import main.java.ru.clevertec.check.repositories.DiscountCardRepository;
 import main.java.ru.clevertec.check.repositories.ProductRepository;
 import main.java.ru.clevertec.check.models.DiscountCard;
 import main.java.ru.clevertec.check.models.Product;
+import main.java.ru.clevertec.check.services.interfaces.Parser;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
 import java.io.File;

@@ -6,6 +6,11 @@ import main.java.ru.clevertec.check.exceptions.ProductNotFoundException;
 import main.java.ru.clevertec.check.models.Check;
 import main.java.ru.clevertec.check.models.Order;
 import main.java.ru.clevertec.check.services.*;
+import main.java.ru.clevertec.check.services.implementations.CommandLineArgumentsParser;
+import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
+import main.java.ru.clevertec.check.services.interfaces.Parser;
+import main.java.ru.clevertec.check.utils.CheckPrinterFactory;
+import main.java.ru.clevertec.check.utils.ParserFactory;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
 import java.io.File;

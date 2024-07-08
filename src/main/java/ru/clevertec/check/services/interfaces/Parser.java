@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.services;
+package main.java.ru.clevertec.check.services.interfaces;
 
 public interface Parser {
 

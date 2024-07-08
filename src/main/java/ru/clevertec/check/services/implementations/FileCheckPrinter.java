@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check;
+package main.java.ru.clevertec.check.services.implementations;
 
 import main.java.ru.clevertec.check.models.Check;
-import main.java.ru.clevertec.check.services.CheckPrinter;
 import main.java.ru.clevertec.check.services.OrderHandler;
+import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
 import main.java.ru.clevertec.check.utils.StringStorage;
 
 import java.io.File;

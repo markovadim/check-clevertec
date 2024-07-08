@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check;
+package main.java.ru.clevertec.check.utils;
 
-import main.java.ru.clevertec.check.services.CSVFileParser;
-import main.java.ru.clevertec.check.services.CommandLineArgumentsParser;
-import main.java.ru.clevertec.check.services.Parser;
+import main.java.ru.clevertec.check.services.implementations.CSVFileParser;
+import main.java.ru.clevertec.check.services.implementations.CommandLineArgumentsParser;
+import main.java.ru.clevertec.check.services.interfaces.Parser;
 
 
 public class ParserFactory {
