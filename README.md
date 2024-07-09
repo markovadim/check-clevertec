@@ -8,6 +8,8 @@
 - quantity - product amount in shop basket
 - discountCard=xxxx - discount cards number
 - balanceDebitCard=xxxx - card balance for payment
+- pathToFile={path} - inner products file
+- saveToFile={path} - result file for check (or errors) writing
 
 ### Output:
 - result.csv file
