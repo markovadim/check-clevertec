@@ -1,18 +1,20 @@
-package main.java.ru.clevertec.check;
+package ru.clevertec.check;
 
-import main.java.ru.clevertec.check.exceptions.BadRequestException;
-import main.java.ru.clevertec.check.exceptions.NotEnoughMoneyException;
-import main.java.ru.clevertec.check.exceptions.ProductNotFoundException;
-import main.java.ru.clevertec.check.models.Check;
-import main.java.ru.clevertec.check.models.Order;
-import main.java.ru.clevertec.check.services.OrderHandler;
-import main.java.ru.clevertec.check.services.PaymentService;
-import main.java.ru.clevertec.check.services.implementations.CommandLineArgumentsParser;
-import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
-import main.java.ru.clevertec.check.services.interfaces.Parser;
-import main.java.ru.clevertec.check.utils.CheckPrinterFactory;
-import main.java.ru.clevertec.check.utils.ParserFactory;
-import main.java.ru.clevertec.check.utils.StringStorage;
+import ru.clevertec.check.exceptions.BadRequestException;
+import ru.clevertec.check.exceptions.NotEnoughMoneyException;
+import ru.clevertec.check.exceptions.ProductNotFoundException;
+import ru.clevertec.check.models.Check;
+import ru.clevertec.check.models.Order;
+import ru.clevertec.check.services.OrderHandler;
+import ru.clevertec.check.services.PaymentService;
+import ru.clevertec.check.services.implementations.CommandLineArgumentsParser;
+import ru.clevertec.check.services.interfaces.CheckPrinter;
+import ru.clevertec.check.services.interfaces.Parser;
+import ru.clevertec.check.utils.CheckPrinterFactory;
+import ru.clevertec.check.utils.ParserFactory;
+import ru.clevertec.check.utils.StringStorage;
+
+import java.io.File;
 
 public class CheckRunner {
 
@@ -21,6 +23,7 @@ public class CheckRunner {
         CheckPrinter consolePrinter = CheckPrinterFactory.getParser(StringStorage.CONSOLE_FORMAT);
 
         try {
+            ParserFactory.getParser(StringStorage.FILE_FORMAT).parse(new File(StringStorage.CARDS_PATH));
             Parser parser = ParserFactory.getParser(StringStorage.CONSOLE_FORMAT);
             parser.parse(args);
             CommandLineArgumentsParser commandLineArgumentsParser = (CommandLineArgumentsParser) parser;

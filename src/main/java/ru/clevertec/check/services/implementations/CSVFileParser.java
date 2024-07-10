@@ -1,11 +1,9 @@
-package main.java.ru.clevertec.check.services.implementations;
+package ru.clevertec.check.services.implementations;
 
-import main.java.ru.clevertec.check.repositories.DiscountCardRepository;
-import main.java.ru.clevertec.check.repositories.ProductRepository;
-import main.java.ru.clevertec.check.models.DiscountCard;
-import main.java.ru.clevertec.check.models.Product;
-import main.java.ru.clevertec.check.services.interfaces.Parser;
-import main.java.ru.clevertec.check.utils.StringStorage;
+import ru.clevertec.check.repositories.DiscountCardRepository;
+import ru.clevertec.check.models.DiscountCard;
+import ru.clevertec.check.services.interfaces.Parser;
+import ru.clevertec.check.utils.StringStorage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,13 +22,9 @@ public class CSVFileParser implements Parser {
                     rowScanner.useDelimiter("\n");
                     while (rowScanner.hasNext()) {
                         String str = rowScanner.next();
-                        Pattern patternForItems = Pattern.compile(StringStorage.PATTERN_FILE_ITEMS);
                         Pattern patternForCard = Pattern.compile(StringStorage.PATTERN_FILE_CARDS);
-                        if (patternForItems.matcher(str).matches()) {
-                            fillingStorage(Product.class, str);
-                        }
                         if (patternForCard.matcher(str).matches()) {
-                            fillingStorage(DiscountCard.class, str);
+                            fillingCardsStorage(str);
                         }
                     }
                 }
@@ -40,25 +34,12 @@ public class CSVFileParser implements Parser {
         }
     }
 
-    private void fillingStorage(Class<?> tClass, String str) {
-        if (tClass.equals(Product.class)) {
-            ProductRepository.products.add(
-                    new Product.Builder()
-                            .id(Integer.parseInt(str.split(";")[0]))
-                            .name(str.split(";")[1])
-                            .price(Double.parseDouble(str.split(";")[2].replaceAll(",", ".")))
-                            .quantityInStock(Integer.parseInt(str.split(";")[3]))
-                            .isWholesale(Boolean.parseBoolean(str.split(";")[4]))
-                            .build()
-            );
-        }
-        if (tClass.equals(DiscountCard.class)) {
-            DiscountCardRepository.cards.add(
-                    new DiscountCard.Builder()
-                            .number(Integer.parseInt(str.split(";")[0]))
-                            .discountPercentage(Integer.parseInt(str.split(";")[1]))
-                            .build()
-            );
-        }
+    private void fillingCardsStorage(String str) {
+        DiscountCardRepository.cards.add(
+                new DiscountCard.Builder()
+                        .number(Integer.parseInt(str.split(";")[0]))
+                        .discountPercentage(Integer.parseInt(str.split(";")[1]))
+                        .build()
+        );
     }
 }

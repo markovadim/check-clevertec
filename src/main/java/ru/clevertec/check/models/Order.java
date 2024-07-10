@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.models;
+package ru.clevertec.check.models;
 
 import java.util.Map;
 

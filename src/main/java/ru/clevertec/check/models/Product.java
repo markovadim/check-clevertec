@@ -1,4 +1,6 @@
-package main.java.ru.clevertec.check.models;
+package ru.clevertec.check.models;
+
+import java.util.Objects;
 
 public class Product {
 
@@ -36,6 +38,19 @@ public class Product {
         return isWholesale;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id && Double.compare(product.price, price) == 0 && quantityInStock == product.quantityInStock && isWholesale == product.isWholesale && name.equals(product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, quantityInStock, isWholesale);
+    }
+
     public static class Builder {
         private int id;
         private String name;
@@ -58,7 +73,7 @@ public class Product {
             return this;
         }
 
-        public Builder quantityInStock(int quantityInStock){
+        public Builder quantityInStock(int quantityInStock) {
             this.quantityInStock = quantityInStock;
             return this;
         }

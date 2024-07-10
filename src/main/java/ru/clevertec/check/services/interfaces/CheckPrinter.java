@@ -1,6 +1,6 @@
-package main.java.ru.clevertec.check.services.interfaces;
+package ru.clevertec.check.services.interfaces;
 
-import main.java.ru.clevertec.check.models.Check;
+import ru.clevertec.check.models.Check;
 
 public interface CheckPrinter {
 

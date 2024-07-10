@@ -1,9 +1,9 @@
-package main.java.ru.clevertec.check.services;
+package ru.clevertec.check.services;
 
-import main.java.ru.clevertec.check.models.DebitCard;
-import main.java.ru.clevertec.check.models.DiscountCard;
-import main.java.ru.clevertec.check.models.Order;
-import main.java.ru.clevertec.check.models.Product;
+import ru.clevertec.check.models.DebitCard;
+import ru.clevertec.check.models.DiscountCard;
+import ru.clevertec.check.models.Order;
+import ru.clevertec.check.models.Product;
 
 import java.math.BigDecimal;
 import java.util.Map;

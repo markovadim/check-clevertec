@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.services;
+package ru.clevertec.check.services;
 
-import main.java.ru.clevertec.check.exceptions.NotEnoughMoneyException;
-import main.java.ru.clevertec.check.models.Check;
-import main.java.ru.clevertec.check.models.Order;
+import ru.clevertec.check.exceptions.NotEnoughMoneyException;
+import ru.clevertec.check.models.Check;
+import ru.clevertec.check.models.Order;
 
 import java.time.LocalDateTime;
 

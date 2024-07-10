@@ -1,10 +1,10 @@
-package main.java.ru.clevertec.check.services.implementations;
+package ru.clevertec.check.services.implementations;
 
-import main.java.ru.clevertec.check.models.Check;
-import main.java.ru.clevertec.check.services.OrderHandler;
-import main.java.ru.clevertec.check.services.interfaces.CheckPrinter;
-import main.java.ru.clevertec.check.utils.FilesUtil;
-import main.java.ru.clevertec.check.utils.StringStorage;
+import ru.clevertec.check.models.Check;
+import ru.clevertec.check.services.OrderHandler;
+import ru.clevertec.check.services.interfaces.CheckPrinter;
+import ru.clevertec.check.utils.FilesUtil;
+import ru.clevertec.check.utils.StringStorage;
 
 import java.io.FileWriter;
 import java.io.IOException;

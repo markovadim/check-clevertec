@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.models;
+package ru.clevertec.check.models;
 
 public class DiscountCard {
 
@@ -33,7 +33,7 @@ public class DiscountCard {
             return this;
         }
 
-        public DiscountCard build(){
+        public DiscountCard build() {
             return new DiscountCard(this);
         }
     }

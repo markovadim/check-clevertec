@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.utils;
+package ru.clevertec.check.utils;
 
 public class StringStorage {
 
@@ -11,6 +11,7 @@ public class StringStorage {
     public static final String PATTERN_LINE_ARGS_DISCOUNT = "discountCard=\\d{4}";
     public static final String PATTERN_LINE_ARGS_BALANCE = "balanceDebitCard=[+-]?(?:\\d*\\.\\d+|\\d+\\.?\\d*)?";
     public static final String PATTERN_LINE_ARGS_WITH_INNER_FILES = "^(\\d+-\\d+\\s+)*((discountCard=\\d+\\s+)?)(balanceDebitCard=[+-]?(?:\\d*\\.\\d+|\\d+\\.?\\d*\\s?){1})(pathToFile=((?:[^/]*[/])*)(.*).csv\\s?)?(saveToFile=((?:[^/]*[/])*)(.*).csv\\s?)?$";
+    public static final String PATTERN_LINE_ARGS_WITH_DATABASE = "^(\\d+-\\d+\\s+)*((discountCard=\\d+\\s+)?)(balanceDebitCard=[+-]?(?:\\d*\\.\\d+|\\d+\\.?\\d*\\s?){1})(saveToFile=((?:[^/]*[/])*)(.*).csv\\s?)? (datasource[.]url=[^ ]+ datasource[.]username=[^ ]+ datasource[.]password=[^ ]+)$";
 
     public static final String FILE_FORMAT = "FILE";
     public static final String CONSOLE_FORMAT = "CONSOLE";
@@ -28,4 +29,6 @@ public class StringStorage {
     public static final String BAD_REQUEST_INPUT_AMOUNT = "Недостаточно продуктов в магазине";
     public static final String BAD_REQUEST_INPUT_ID = "Продукт с идентификатором = %s не найден";
     public static final String ERROR = "ERROR";
+
+    public static final String SQL_FIND_PRODUCT_BY_ID = "SELECT id, name, price, quantity_in_stock, is_wholesale FROM product WHERE id = ?";
 }

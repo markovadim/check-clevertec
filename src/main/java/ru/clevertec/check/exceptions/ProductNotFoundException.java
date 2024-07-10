@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.exceptions;
+package ru.clevertec.check.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {
 
